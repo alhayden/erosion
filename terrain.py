@@ -119,12 +119,14 @@ def slump (a, b, matx):
 #    repose(b[0], b[1], matx)
 
 
-siz = 256
-#terrain = generateBase(siz)
-terrain = generateBaseMagic(siz)
-for x in range(70000):
-    if x % 10000 == 0:
-        print(x)
-    erode(randint(0, siz-1), randint(0, siz-1), terrain)
 
-stlify(terrain,horizscale=0.5).save("terrain.stl")
+if __name__ == "__main__":
+    siz = 256
+    #terrain = generateBase(siz)
+    terrain = generateBaseMagic(siz)
+    for x in range(70000):
+        if x % 10000 == 0:
+            print(x)
+        erode(randint(0, siz-1), randint(0, siz-1), terrain)
+
+    stlify(terrain,horizscale=0.5).save("terrain.stl")
