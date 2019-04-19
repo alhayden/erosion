@@ -8,19 +8,6 @@ from terrain import *
 
 adjacency = [(-1, -1), (0, -1), (-1, 0), (-1, 1), (1, -1), (1, 0), (0, 1), (1, 1)]
 
-def generateBig(size):
-    matx = makerix(size)
-    levels = [(16, 0.3), (32, 0.15), (64, 0.1), (256, 0.01)]
-    for l in levels:
-        temp = makerix(l[0])
-        randomPopulate(temp, l[1])
-        temp = scaleMatrix(temp, size // l[0])
-        matx = sumMatrix(matx, temp)
-    for x in range(size):
-        for y in range(size):
-            matx[y][x] += x / (size * 1)
-    return matx
-
 
 def calculateFlows(matx):
     # initial condition: 1 rain unit at each point with zero velocity
@@ -29,7 +16,7 @@ def calculateFlows(matx):
     velocity = makerix(size)
     
     #assume water flows straight downhill, v doesn't need direction
-    #velocity = [[ [0, 0, 0] for x in range(len(matx) - 1)] for y in range(len(matx) - 1)]
+    #velocity = [[ [0, 0] for x in range(len(matx) - 1)] for y in range(len(matx) - 1)]
     
     # work from top to bottom (assume no water flows uphill)
     locations = []
@@ -75,6 +62,6 @@ def calculateFlows(matx):
 if __name__ == "__main__":
     m = generateBig(256)
     for x in range(1000):
-        print(f"{x} / 500   ",end="\r")
+        print(f" {x} / 500   ",end="\r")
         calculateFlows(m)
     stlify(m,horizscale=0.5).save("bigTerrain.stl")
